@@ -2,7 +2,7 @@
 <html lang="sl">
 <head>
   <meta charset="UTF-8">
-  <title>Arhiv | Radio Marija</title>
+  <title>Radio Marija - Program</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
   <style>
     * { box-sizing: border-box; }
@@ -31,6 +31,7 @@
     }
     .content {
       padding: 30px;
+      display: none;
     }
     table {
       width: 100%;
@@ -56,17 +57,23 @@
       font-weight: bold;
       margin-top: 20px;
     }
-    .modal {
-      display: none;
+    footer {
+      text-align: center;
       position: fixed;
-      z-index: 1000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
-      align-items: center;
-      justify-content: center;
+      bottom: 0;
+      width: 100%;
     }
-    .modal-content {
+    .modal, .login-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+    .modal-content, .login-box {
       background: white;
       padding: 20px;
       border-radius: 10px;
@@ -75,11 +82,15 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
       position: relative;
     }
-    .modal-content input,
-    .modal-content select {
+    .login-box img {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 80%;
+    }
+    .login-box input {
       width: 100%;
-      margin-top: 10px;
       padding: 10px;
+      margin-bottom: 15px;
       border-radius: 5px;
       border: 1px solid #ccc;
     }
@@ -103,16 +114,23 @@
 <header>
   <img src="RMS.png" alt="RMS Logo">
   <nav>
-    <a href="#">DOMOV</a>
-    <a href="#">ARHIV</a>
-    <a href="#" onclick="logout()">ODJAVA</a>
+    <a href="#" onclick="prikaziDomov()">DOMOV</a>
+    <a href="#" onclick="prikaziArhiv()">ARHIV</a>
+    <a href="#" onclick="odjava()">ODJAVA</a>
   </nav>
 </header>
 
-<div class="content">
+<!-- DOMOV -->
+<div class="content" id="domov">
+  <div style="text-align:center;">
+    <img src="RMS.png" alt="Logo" style="max-width:300px;">
+  </div>
+</div>
+
+<!-- ARHIV -->
+<div class="content" id="arhiv">
   <h2>Arhiv scenarijev</h2>
   <button onclick="odpriModal()">+ Dodaj scenarij</button>
-
   <table id="tabela">
     <thead>
       <tr>
@@ -132,8 +150,8 @@
   © Radio Marija Slovenija, 2025
 </footer>
 
-<!-- Modal -->
-<div id="modal" class="modal">
+<!-- MODAL -->
+<div id="modal" class="modal" style="display:none;">
   <div class="modal-content">
     <span class="close" onclick="zapriModal()">&times;</span>
     <h3>Dodaj nov scenarij</h3>
@@ -150,8 +168,41 @@
   </div>
 </div>
 
+<!-- LOGIN -->
+<div class="login-screen" id="login">
+  <div class="login-box">
+    <img src="RMS.png" alt="RMS">
+    <h3 style="text-align:center;">Prijava</h3>
+    <input type="text" id="uporabniskoIme" placeholder="Uporabniško ime (npr. neja)">
+    <button onclick="prijava()">Prijavi se</button>
+  </div>
+</div>
+
 <script>
-  const uporabnik = "Julija Brilej"; // Lahko prilagodiš glede na prijavo
+  const dovoljeni = {
+    "jasa": "Jaša Petrinjak",
+    "neja": "Neja Stvarnik",
+    "julija": "Julija Brilej"
+  };
+
+  let prijavljen = null;
+
+  function prijava() {
+    const vnos = document.getElementById("uporabniskoIme").value.toLowerCase().trim();
+    if (dovoljeni[vnos]) {
+      prijavljen = dovoljeni[vnos];
+      localStorage.setItem("prijavljen", prijavljen);
+      document.getElementById("login").style.display = "none";
+      document.getElementById("domov").style.display = "block";
+    } else {
+      alert("Neveljavno uporabniško ime.");
+    }
+  }
+
+  function odjava() {
+    localStorage.removeItem("prijavljen");
+    location.reload();
+  }
 
   function odpriModal() {
     document.getElementById("modal").style.display = "flex";
@@ -169,11 +220,11 @@
     const opombe = document.getElementById("opombe").value;
 
     if (!naslov || !ura || !jezik) {
-      alert("Izpolni obvezna polja: naslov, ura in jezik.");
+      alert("Izpolni obvezna polja.");
       return;
     }
 
-    const vnos = {naslov, ura, tip, jezik, opombe, dodal: uporabnik};
+    const vnos = {naslov, ura, tip, jezik, opombe, dodal: prijavljen};
     let podatki = JSON.parse(localStorage.getItem("arhiv") || "[]");
     podatki.push(vnos);
     podatki.sort((a,b) => a.ura.localeCompare(b.ura));
@@ -183,10 +234,11 @@
   }
 
   function prikaziArhiv() {
+    document.getElementById("domov").style.display = "none";
+    document.getElementById("arhiv").style.display = "block";
     const podatki = JSON.parse(localStorage.getItem("arhiv") || "[]");
     const tbody = document.querySelector("#tabela tbody");
     tbody.innerHTML = "";
-
     podatki.forEach(p => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
@@ -201,12 +253,19 @@
     });
   }
 
-  function logout() {
-    alert("Odjavljeno.");
-    // Lokacija odjave ali osvežitev
+  function prikaziDomov() {
+    document.getElementById("arhiv").style.display = "none";
+    document.getElementById("domov").style.display = "block";
   }
 
-  prikaziArhiv();
+  window.onload = () => {
+    const uporabnik = localStorage.getItem("prijavljen");
+    if (uporabnik && Object.values(dovoljeni).includes(uporabnik)) {
+      prijavljen = uporabnik;
+      document.getElementById("login").style.display = "none";
+      document.getElementById("domov").style.display = "block";
+    }
+  };
 </script>
 
 </body>
