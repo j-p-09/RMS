@@ -1,131 +1,145 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-  <meta charset="UTF-8">
-  <title>Radio Marija Sistem</title>
+  <meta charset="UTF-8" />
+  <title>Arhiv - Radio Marija</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f8;
-      color: #333;
+      background: #f9f9fc;
     }
-    body {
-      display: flex;
-      flex-direction: column;
-    }
+    body { display: flex; flex-direction: column; }
+
     header {
-      background-color: #fff;
+      background: #fff;
       padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    header img {
-      height: 50px;
-    }
+    header img { height: 50px; }
     nav a {
-      margin: 0 15px;
+      margin: 0 10px;
       text-decoration: none;
-      color: #444;
       font-weight: 500;
+      color: #333;
     }
-    nav a:hover {
-      color: #2e77d0;
+
+    .menu { display: none; }
+    .content { display: none; padding: 20px; flex: 1; }
+
+    footer {
+      background: #eee;
+      padding: 10px;
+      text-align: center;
+      font-size: 0.9em;
     }
-    .content {
-      flex: 1;
-      padding: 20px;
-      display: none;
-    }
-    .centered {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 70vh;
-    }
+
     .login-box {
+      margin: auto;
+      padding: 30px;
       background: white;
-      padding: 30px 40px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       width: 300px;
     }
-    .login-box input {
+    input, select {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
+      margin-top: 10px;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
-    .login-box button {
+    button {
       background: #2e77d0;
       color: white;
       padding: 10px;
       width: 100%;
       border: none;
       border-radius: 6px;
+      margin-top: 10px;
       font-weight: bold;
-      cursor: pointer;
     }
-    .login-box button:hover {
-      background: #245fa1;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
     }
-    footer {
-      background-color: #eee;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
+    th, td {
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      text-align: left;
     }
-    .hidden {
-      display: none;
-    }
-    .menu {
-      display: none;
-    }
-    .active {
-      display: block !important;
+    th {
+      background: #f0f0f5;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <img src="RMS.png" alt="Radio Marija Slovenija" />
+  <img src="RMS.png" alt="Radio Marija" />
   <nav class="menu">
     <a href="#" onclick="showSection('home')">DOMOV</a>
-    <a href="#" onclick="showSection('archive')">ARHIV</a>
+    <a href="#" onclick="showSection('program')">ARHIV</a>
     <a href="#" onclick="logout()">ODJAVA</a>
   </nav>
 </header>
 
 <!-- Prijava -->
-<div id="login" class="centered">
+<div id="login" class="centered" style="padding: 50px; text-align: center;">
   <div class="login-box">
     <h2>Prijava</h2>
-    <input type="text" id="username" placeholder="Uporabniško ime">
-    <input type="password" id="password" placeholder="Geslo">
+    <input type="text" id="username" placeholder="Uporabniško ime" />
+    <input type="password" id="password" placeholder="Geslo" />
     <button onclick="login()">Prijava</button>
-    <p id="login-error" style="color: red; display:none;">Napačni podatki</p>
+    <p id="login-error" style="color: red; display:none;">Napaka: napačni podatki</p>
   </div>
 </div>
 
-<!-- Vsebina -->
+<!-- DOMOV -->
 <div id="home" class="content">
-  <div class="centered">
-    <img src="RMS.png" alt="RMS logo" style="max-width: 300px;">
+  <div style="text-align: center;">
+    <img src="RMS.png" alt="RMS logo" style="max-width: 300px;" />
   </div>
 </div>
 
-<div id="archive" class="content">
-  <h2>Arhiv scenarijev</h2>
-  <p>(Tukaj bodo dokumenti za sinhronizacijo...)</p>
+<!-- ARHIV / PROGRAM -->
+<div id="program" class="content">
+  <h2>Program scenarijev</h2>
+  <div>
+    <input type="text" id="naslov" placeholder="Naslov oddaje" />
+    <input type="time" id="ura" />
+    <select id="tip">
+      <option value="prevod">Prevod</option>
+      <option value="podnapisi">Podnapisi</option>
+      <option value="voice-over">Voice-over</option>
+    </select>
+    <input type="text" id="jezik" placeholder="Jezik (npr. slovenščina)" />
+    <input type="text" id="opombe" placeholder="Opombe" />
+    <button onclick="dodajVnos()">Dodaj v program</button>
+  </div>
+
+  <table id="tabelaProgram">
+    <thead>
+      <tr>
+        <th>Ura</th>
+        <th>Naslov</th>
+        <th>Tip</th>
+        <th>Jezik</th>
+        <th>Opombe</th>
+        <th>Dodal</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 </div>
 
 <footer>
@@ -133,19 +147,24 @@
 </footer>
 
 <script>
-  const validUsers = {
-    "admin": "geslo123",
-    "marija": "radio2025"
+  const uporabniki = {
+    "jasa": {ime: "Jaša Petrinjak", geslo: "rms1"},
+    "neja": {ime: "Neja Stvarnik", geslo: "rms2"},
+    "julija": {ime: "Julija Brilej", geslo: "rms3"}
   };
+
+  let prijavljen = "";
 
   function login() {
     const u = document.getElementById("username").value;
     const p = document.getElementById("password").value;
-    if (validUsers[u] === p) {
+
+    if (uporabniki[u] && uporabniki[u].geslo === p) {
+      prijavljen = u;
       document.getElementById("login").style.display = "none";
-      document.querySelectorAll(".content").forEach(e => e.style.display = "none");
       document.querySelector("nav.menu").style.display = "block";
-      showSection('home');
+      showSection("home");
+      naloziProgram();
     } else {
       document.getElementById("login-error").style.display = "block";
     }
@@ -158,6 +177,55 @@
   function showSection(id) {
     document.querySelectorAll(".content").forEach(e => e.style.display = "none");
     document.getElementById(id).style.display = "block";
+  }
+
+  function dodajVnos() {
+    const naslov = document.getElementById("naslov").value.trim();
+    const ura = document.getElementById("ura").value;
+    const tip = document.getElementById("tip").value;
+    const jezik = document.getElementById("jezik").value.trim();
+    const opombe = document.getElementById("opombe").value.trim();
+
+    if (!naslov || !ura || !jezik) {
+      alert("Izpolnite obvezna polja (naslov, ura, jezik)");
+      return;
+    }
+
+    const zapis = {
+      naslov, ura, tip, jezik, opombe,
+      dodal: uporabniki[prijavljen].ime
+    };
+
+    let program = JSON.parse(localStorage.getItem("program") || "[]");
+    program.push(zapis);
+    program.sort((a, b) => a.ura.localeCompare(b.ura));
+    localStorage.setItem("program", JSON.stringify(program));
+    prikaziProgram();
+    document.getElementById("naslov").value = "";
+    document.getElementById("jezik").value = "";
+    document.getElementById("opombe").value = "";
+  }
+
+  function naloziProgram() {
+    prikaziProgram();
+  }
+
+  function prikaziProgram() {
+    const program = JSON.parse(localStorage.getItem("program") || "[]");
+    const tbody = document.querySelector("#tabelaProgram tbody");
+    tbody.innerHTML = "";
+    program.forEach(item => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${item.ura}</td>
+        <td>${item.naslov}</td>
+        <td>${item.tip}</td>
+        <td>${item.jezik}</td>
+        <td>${item.opombe}</td>
+        <td>${item.dodal}</td>
+      `;
+      tbody.appendChild(tr);
+    });
   }
 </script>
 
