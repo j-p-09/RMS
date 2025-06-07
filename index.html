@@ -1,206 +1,63 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>TV Arhiv - Radio Marija</title>
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
-<style>
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    background: #f4f6fb;
-    color: #333;
-  }
-  header,
-  footer {
-    background: #2e3a59;
-    color: white;
-    padding: 10px 20px;
-  }
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  header img {
-    height: 40px;
-  }
-  nav a {
-    color: white;
-    margin-left: 15px;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .content {
-    padding: 30px;
-    display: none;
-  }
-  table {
-    width: 100%;
-    background: white;
-    border-collapse: collapse;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  }
-  th,
-  td {
-    padding: 12px 15px;
-    border: 1px solid #e0e0e0;
-    vertical-align: middle;
-  }
-  th {
-    background: #f0f2f7;
-    text-align: left;
-  }
-  button,
-  .icon-button {
-    background: #2e77d0;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1rem;
-  }
-  .icon-button {
-    padding: 6px 10px;
-    font-weight: normal;
-    border-radius: 5px;
-  }
-  .icon-button:hover,
-  button:hover {
-    background: #255ea8;
-  }
-  footer {
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-  .modal,
-  .login-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-  }
-  .modal-content,
-  .login-box {
-    background: white;
-    padding: 25px 30px;
-    border-radius: 10px;
-    width: 95%;
-    max-width: 500px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    position: relative;
-    font-size: 1rem;
-  }
-  .login-box img {
-    display: block;
-    margin: 0 auto 20px;
-    max-width: 80%;
-  }
-  .login-box input,
-  .modal-content input,
-  .modal-content select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-  }
-  .close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 22px;
-    cursor: pointer;
-    color: #aaa;
-    transition: color 0.2s;
-  }
-  .close:hover {
-    color: black;
-  }
-  label.status-label {
-    font-weight: 600;
-    margin-top: 10px;
-    display: block;
-    margin-bottom: 5px;
-  }
-  #file-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #f0f2f7;
-    padding: 8px 12px;
-    border-radius: 6px;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-  }
-  #file-info span {
-    overflow-wrap: anywhere;
-  }
-  #remove-file-btn {
-    background: none;
-    border: none;
-    color: #d9534f;
-    cursor: pointer;
-    font-size: 1.3rem;
-  }
-  #remove-file-btn:hover {
-    color: #a12b24;
-  }
-  a.scenarij-link {
-    color: #2e77d0;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  a.scenarij-link:hover {
-    color: #255ea8;
-  }
-  /* Table delete icon in table now removed as per spec */
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Radio Marija - Arhiv</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body { margin: 0; background: #f2f4f8; }
+    header, footer { background: #0051a2; color: white; text-align: center; padding: 10px; }
+    nav { background: #003f7f; display: flex; gap: 20px; padding: 10px 20px; color: white; align-items: center; }
+    nav a { color: white; text-decoration: none; font-weight: bold; }
+    nav a:hover { text-decoration: underline; }
+    .logo { height: 60px; }
+    .content { display: none; padding: 20px; }
+    .centered { display: flex; justify-content: center; align-items: center; height: calc(100vh - 160px); }
+    .login-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px #ccc; min-width: 300px; }
+    input, select, button { margin-top: 10px; width: 100%; padding: 8px; }
+    table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; }
+    th, td { padding: 10px; border-bottom: 1px solid #ddd; }
+    th { background: #f0f0f0; }
+    .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); display: none; justify-content: center; align-items: center; z-index: 10; }
+    .modal-content { background: white; padding: 20px; border-radius: 10px; width: 90%; max-width: 500px; position: relative; }
+    .close { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 20px; color: #999; }
+    .close:hover { color: black; }
+    .add-btn { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin-bottom: 10px; }
+    .add-btn:hover { background: #218838; }
+    .icon-button { background: none; border: none; cursor: pointer; color: #d9534f; font-size: 1.2rem; }
+    .file-info { display: flex; justify-content: space-between; background: #f0f0f0; padding: 6px 10px; margin-top: 10px; border-radius: 5px; align-items: center; }
+    footer { position: fixed; bottom: 0; width: 100%; }
+  </style>
 </head>
 <body>
+
 <header>
-  <img src="RMS.png" alt="RMS Logo" />
-  <nav>
-    <a onclick="prikaziDomov()">DOMOV</a>
-    <a onclick="prikaziArhiv()">ARHIV</a>
-    <a onclick="odjava()">ODJAVA</a>
-  </nav>
+  <img src="RMS.png" alt="RMS Logo" class="logo">
 </header>
 
-<div class="content" id="domov">
-  <div style="text-align:center;">
-    <img src="RMS.png" alt="Logo" style="max-width: 300px;" />
+<nav>
+  <a href="#" onclick="prikaziDomov()">DOMOV</a>
+  <a href="#" onclick="prikaziArhiv()">ARHIV</a>
+  <a href="#" onclick="odjava()">ODJAVA</a>
+</nav>
+
+<div id="login" class="centered">
+  <div class="login-box">
+    <h2>Prijava</h2>
+    <input id="username" placeholder="Uporabniško ime" />
+    <input id="password" type="password" placeholder="Geslo" />
+    <button onclick="prijavi()">Prijava</button>
   </div>
 </div>
 
-<div class="content" id="arhiv">
-  <h2>Arhiv scenarijev</h2>
-  <button class="icon-button" onclick="odpriModal()">
-    <i class="fa fa-plus"></i> Dodaj scenarij
-  </button>
+<div id="domov" class="content centered">
+  <img src="RMS.png" alt="RMS Logo" class="logo">
+</div>
+
+<div id="arhiv" class="content">
+  <button class="add-btn" onclick="odpriModal()">+ Dodaj scenarij</button>
   <table id="tabela">
     <thead>
       <tr>
@@ -215,49 +72,35 @@
   </table>
 </div>
 
-<footer>© Radio Marija Slovenija, 2025</footer>
-
-<!-- Modal za dodajanje scenarija -->
-<div id="modal" class="modal" style="display: none;">
+<!-- Modal: Dodaj scenarij -->
+<div id="modal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="zapriModal()">&times;</span>
-    <h3>Dodaj nov scenarij</h3>
-    <input type="date" id="datum" />
-    <input type="text" id="naslov" placeholder="Naslov oddaje" maxlength="100" />
+    <h3>Dodaj scenarij</h3>
+    <input id="datum" type="date" />
+    <input id="naslov" placeholder="Naslov" />
     <select id="tip">
-      <option value="Prevod">Prevod</option>
-      <option value="Podnapisi">Podnapisi</option>
-      <option value="Voice-over">Voice-over</option>
+      <option>Prevod</option>
+      <option>Sinhronizacija</option>
     </select>
-    <input type="text" id="jezik" placeholder="Jezik" maxlength="50" />
-    <label class="status-label" for="stanje">Stanje scenarija</label>
+    <input id="jezik" placeholder="Jezik" />
     <select id="stanje">
-      <option value="PREVEDENO">PREVEDENO</option>
-      <option value="POSNETO">POSNETO</option>
-      <option value="UREJENO">UREJENO</option>
-      <option value="OBJAVLJENO">OBJAVLJENO</option>
+      <option>PREVEDENO</option>
+      <option>POSNETO</option>
+      <option>UREJENO</option>
+      <option>OBJAVLJENO</option>
     </select>
-
-    <label class="status-label">Naloži Word datoteko (.doc, .docx)</label>
-    <input
-      type="file"
-      id="scenarijFile"
-      accept=".doc,.docx"
-      onchange="handleFileSelect()"
-    />
-    <div id="file-info" style="display:none;">
+    <input type="file" id="scenarijFile" onchange="handleFileSelect()" />
+    <div id="file-info" class="file-info" style="display:none">
       <span id="file-name"></span>
-      <button id="remove-file-btn" title="Odstrani datoteko" onclick="odstraniDatoteko()">
-        <i class="fa fa-trash"></i>
-      </button>
+      <button class="icon-button" onclick="odstraniDatoteko()"><i class="fa fa-trash"></i></button>
     </div>
-
-    <button onclick="shraniScenarij()">Shrani scenarij</button>
+    <button class="add-btn" onclick="shraniScenarij()">Shrani</button>
   </div>
 </div>
 
-<!-- Modal za podrobnosti scenarija -->
-<div id="podrobnostiModal" class="modal" style="display:none;">
+<!-- Modal: Podrobnosti -->
+<div id="podrobnostiModal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="zapriPodrobnostiModal()">&times;</span>
     <h3 id="podrobnostiNaslov"></h3>
@@ -265,81 +108,56 @@
     <p><strong>Tip:</strong> <span id="podrobnostiTip"></span></p>
     <p><strong>Jezik:</strong> <span id="podrobnostiJezik"></span></p>
     <p><strong>Stanje:</strong> <span id="podrobnostiStanje"></span></p>
-    <p><strong>Dodano od:</strong> <span id="podrobnostiAvtor"></span></p>
-    <p>
-      <strong>Datoteka:</strong>
-      <a href="#" target="_blank" id="podrobnostiLink" class="scenarij-link"
-        >Prenesi / Odpri</a
-      >
-    </p>
+    <p><strong>Avtor:</strong> <span id="podrobnostiAvtor"></span></p>
+    <p><a id="podrobnostiLink" href="#" target="_blank">Prenesi datoteko</a></p>
   </div>
 </div>
 
-<!-- Login ekran -->
-<div class="login-screen" id="login">
-  <div class="login-box">
-    <img src="RMS.png" alt="RMS" />
-    <h3 style="text-align:center;">Prijava</h3>
-    <input
-      type="text"
-      id="uporabniskoIme"
-      placeholder="Uporabniško ime (npr. neja)"
-      autocomplete="off"
-      maxlength="20"
-    />
-    <input
-      type="password"
-      id="geslo"
-      placeholder="Geslo"
-      autocomplete="off"
-      maxlength="20"
-    />
-    <button onclick="prijava()">
-      <i class="fa fa-right-to-bracket"></i> Prijavi se
-    </button>
-  </div>
-</div>
+<footer>
+  Radio Marija Slovenija – Arhiv scenarijev
+</footer>
 
 <script>
-  const dovoljeni = {
-    jasa: { ime: "Jaša Petrinjak", geslo: "jasapass" },
-    neja: { ime: "Neja Stvarnik", geslo: "nejapass" },
-    julija: { ime: "Julija Brilej", geslo: "julijapass" },
-  };
-
   let prijavljen = null;
   let izbranaDatoteka = null;
+  let arhiv = [];
 
-  function prijava() {
-    const uporabnik = document
-      .getElementById("uporabniskoIme")
-      .value.toLowerCase()
-      .trim();
-    const geslo = document.getElementById("geslo").value;
+  const uporabniki = {
+    "jasa": "jasapass",
+    "neja": "nejapass",
+    "julija": "julijapass"
+  };
 
-    if (
-      dovoljeni[uporabnik] &&
-      dovoljeni[uporabnik].geslo === geslo &&
-      dovoljeni[uporabnik].ime
-    ) {
-      prijavljen = dovoljeni[uporabnik].ime;
-      localStorage.setItem("prijavljen", prijavljen);
+  function prijavi() {
+    const user = document.getElementById("username").value.toLowerCase();
+    const pass = document.getElementById("password").value;
+    if (uporabniki[user] && uporabniki[user] === pass) {
+      prijavljen = user;
+      localStorage.setItem("prijavljen", user);
       document.getElementById("login").style.display = "none";
-      document.getElementById("domov").style.display = "block";
-      ocistiLoginFormo();
+      prikaziDomov();
     } else {
-      alert("Neveljavno uporabniško ime ali geslo.");
+      alert("Napačno uporabniško ime ali geslo.");
     }
-  }
-
-  function ocistiLoginFormo() {
-    document.getElementById("uporabniskoIme").value = "";
-    document.getElementById("geslo").value = "";
   }
 
   function odjava() {
     localStorage.removeItem("prijavljen");
     location.reload();
+  }
+
+  function prikaziDomov() {
+    skrijVse();
+    document.getElementById("domov").style.display = "flex";
+  }
+
+  function prikaziArhiv() {
+    skrijVse();
+    document.getElementById("arhiv").style.display = "block";
+  }
+
+  function skrijVse() {
+    document.querySelectorAll(".content").forEach(el => el.style.display = "none");
   }
 
   function odpriModal() {
@@ -348,10 +166,6 @@
 
   function zapriModal() {
     document.getElementById("modal").style.display = "none";
-    resetirajModal();
-  }
-
-  function resetirajModal() {
     document.getElementById("datum").value = "";
     document.getElementById("naslov").value = "";
     document.getElementById("tip").value = "Prevod";
@@ -368,9 +182,6 @@
       izbranaDatoteka = input.files[0];
       document.getElementById("file-name").textContent = izbranaDatoteka.name;
       document.getElementById("file-info").style.display = "flex";
-    } else {
-      izbranaDatoteka = null;
-      document.getElementById("file-info").style.display = "none";
     }
   }
 
@@ -381,8 +192,6 @@
     document.getElementById("file-info").style.display = "none";
   }
 
-  let arhiv = [];
-
   function shraniScenarij() {
     const datum = document.getElementById("datum").value;
     const naslov = document.getElementById("naslov").value.trim();
@@ -391,42 +200,23 @@
     const stanje = document.getElementById("stanje").value;
 
     if (!datum || !naslov || !jezik) {
-      alert("Prosim, izpolnite vse obvezne podatke.");
+      alert("Izpolnite vsa obvezna polja.");
       return;
     }
-    // Za demo: Datoteko bomo samo shranili v arhiv kot objekt, brez upload-a (ni backend)
-    let datotekaObjekt = null;
+
     if (izbranaDatoteka) {
-      // Branje datoteke v Base64, da lahko damo povezavo (demo)
       const reader = new FileReader();
       reader.onload = function (e) {
-        datotekaObjekt = {
-          ime: izbranaDatoteka.name,
-          vsebina: e.target.result,
-          tip: izbranaDatoteka.type,
-        };
         dodajVArhiv({
-          datum,
-          naslov,
-          tip,
-          jezik,
-          stanje,
-          datoteka: datotekaObjekt,
-          avtor: prijavljen,
+          datum, naslov, tip, jezik, stanje,
+          datoteka: { ime: izbranaDatoteka.name, vsebina: e.target.result },
+          avtor: prijavljen
         });
         zapriModal();
       };
       reader.readAsDataURL(izbranaDatoteka);
     } else {
-      dodajVArhiv({
-        datum,
-        naslov,
-        tip,
-        jezik,
-        stanje,
-        datoteka: null,
-        avtor: prijavljen,
-      });
+      dodajVArhiv({ datum, naslov, tip, jezik, stanje, datoteka: null, avtor: prijavljen });
       zapriModal();
     }
   }
@@ -442,35 +232,47 @@
     arhiv.forEach((vnos, i) => {
       const tr = document.createElement("tr");
 
-      // Datum
       const tdDatum = document.createElement("td");
       tdDatum.textContent = vnos.datum;
       tr.appendChild(tdDatum);
 
-      // Naslov - klikljiv za modal z detajli
       const tdNaslov = document.createElement("td");
+      tdNaslov.style.display = "flex";
+      tdNaslov.style.justifyContent = "space-between";
+      tdNaslov.style.alignItems = "center";
+
       const a = document.createElement("a");
       a.textContent = vnos.naslov;
       a.href = "#";
-      a.className = "scenarij-link";
+      a.style.flexGrow = "1";
       a.onclick = (e) => {
         e.preventDefault();
         odpriPodrobnostiModal(i);
       };
       tdNaslov.appendChild(a);
+
+      const delBtn = document.createElement("button");
+      delBtn.className = "icon-button";
+      delBtn.title = "Izbriši";
+      delBtn.innerHTML = '<i class="fa fa-trash"></i>';
+      delBtn.onclick = () => {
+        if (confirm(`Izbrišem "${vnos.naslov}"?`)) {
+          arhiv.splice(i, 1);
+          osveziTabelo();
+        }
+      };
+      tdNaslov.appendChild(delBtn);
+
       tr.appendChild(tdNaslov);
 
-      // Tip
       const tdTip = document.createElement("td");
       tdTip.textContent = vnos.tip;
       tr.appendChild(tdTip);
 
-      // Jezik
       const tdJezik = document.createElement("td");
       tdJezik.textContent = vnos.jezik;
       tr.appendChild(tdJezik);
 
-      // Stanje
       const tdStanje = document.createElement("td");
       tdStanje.textContent = vnos.stanje;
       tr.appendChild(tdStanje);
@@ -479,25 +281,21 @@
     });
   }
 
-  // Modal za podrobnosti scenarija
-  function odpriPodrobnostiModal(index) {
-    const vnos = arhiv[index];
-    document.getElementById("podrobnostiNaslov").textContent = vnos.naslov;
-    document.getElementById("podrobnostiDatum").textContent = vnos.datum;
-    document.getElementById("podrobnostiTip").textContent = vnos.tip;
-    document.getElementById("podrobnostiJezik").textContent = vnos.jezik;
-    document.getElementById("podrobnostiStanje").textContent = vnos.stanje;
-    document.getElementById("podrobnostiAvtor").textContent = vnos.avtor;
+  function odpriPodrobnostiModal(i) {
+    const v = arhiv[i];
+    document.getElementById("podrobnostiNaslov").textContent = v.naslov;
+    document.getElementById("podrobnostiDatum").textContent = v.datum;
+    document.getElementById("podrobnostiTip").textContent = v.tip;
+    document.getElementById("podrobnostiJezik").textContent = v.jezik;
+    document.getElementById("podrobnostiStanje").textContent = v.stanje;
+    document.getElementById("podrobnostiAvtor").textContent = v.avtor;
     const link = document.getElementById("podrobnostiLink");
-    if (vnos.datoteka) {
-      link.href = vnos.datoteka.vsebina;
-      link.download = vnos.datoteka.ime;
-      link.style.pointerEvents = "auto";
-      link.style.color = "#2e77d0";
+    if (v.datoteka) {
+      link.href = v.datoteka.vsebina;
+      link.download = v.datoteka.ime;
+      link.textContent = "Prenesi datoteko";
     } else {
       link.href = "#";
-      link.style.pointerEvents = "none";
-      link.style.color = "#999";
       link.textContent = "Ni datoteke";
     }
     document.getElementById("podrobnostiModal").style.display = "flex";
@@ -507,25 +305,7 @@
     document.getElementById("podrobnostiModal").style.display = "none";
   }
 
-  // Prikaz strani
-  function prikaziDomov() {
-    skrijVse();
-    document.getElementById("domov").style.display = "block";
-  }
-
-  function prikaziArhiv() {
-    skrijVse();
-    document.getElementById("arhiv").style.display = "block";
-  }
-
-  function skrijVse() {
-    document.querySelectorAll(".content").forEach((el) => {
-      el.style.display = "none";
-    });
-  }
-
-  // Če je uporabnik že prijavljen v localStorage, prikažemo takoj
-  window.onload = function () {
+  window.onload = () => {
     const user = localStorage.getItem("prijavljen");
     if (user) {
       prijavljen = user;
@@ -536,5 +316,6 @@
     }
   };
 </script>
+
 </body>
 </html>
