@@ -1,29 +1,165 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prijava – Radio Marija</title>
-  <link rel="stylesheet" href="stil.css" />
+  <meta charset="UTF-8">
+  <title>Radio Marija Sistem</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f8;
+      color: #333;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #fff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    header img {
+      height: 50px;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+    }
+    nav a:hover {
+      color: #2e77d0;
+    }
+    .content {
+      flex: 1;
+      padding: 20px;
+      display: none;
+    }
+    .centered {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 70vh;
+    }
+    .login-box {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .login-box button {
+      background: #2e77d0;
+      color: white;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .login-box button:hover {
+      background: #245fa1;
+    }
+    footer {
+      background-color: #eee;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+    }
+    .hidden {
+      display: none;
+    }
+    .menu {
+      display: none;
+    }
+    .active {
+      display: block !important;
+    }
+  </style>
 </head>
 <body>
 
 <header>
   <img src="RMS.png" alt="Radio Marija Slovenija" />
+  <nav class="menu">
+    <a href="#" onclick="showSection('home')">DOMOV</a>
+    <a href="#" onclick="showSection('archive')">ARHIV</a>
+    <a href="#" onclick="logout()">ODJAVA</a>
+  </nav>
 </header>
 
-<div class="centered">
+<!-- Prijava -->
+<div id="login" class="centered">
   <div class="login-box">
     <h2>Prijava</h2>
-    <input type="text" placeholder="Uporabniško ime" />
-    <input type="password" placeholder="Geslo" />
-    <button onclick="window.location.href='domov.html'">Prijava</button>
+    <input type="text" id="username" placeholder="Uporabniško ime">
+    <input type="password" id="password" placeholder="Geslo">
+    <button onclick="login()">Prijava</button>
+    <p id="login-error" style="color: red; display:none;">Napačni podatki</p>
   </div>
+</div>
+
+<!-- Vsebina -->
+<div id="home" class="content">
+  <div class="centered">
+    <img src="RMS.png" alt="RMS logo" style="max-width: 300px;">
+  </div>
+</div>
+
+<div id="archive" class="content">
+  <h2>Arhiv scenarijev</h2>
+  <p>(Tukaj bodo dokumenti za sinhronizacijo...)</p>
 </div>
 
 <footer>
   © Radio Marija Slovenija, 2025
 </footer>
+
+<script>
+  const validUsers = {
+    "admin": "geslo123",
+    "marija": "radio2025"
+  };
+
+  function login() {
+    const u = document.getElementById("username").value;
+    const p = document.getElementById("password").value;
+    if (validUsers[u] === p) {
+      document.getElementById("login").style.display = "none";
+      document.querySelectorAll(".content").forEach(e => e.style.display = "none");
+      document.querySelector("nav.menu").style.display = "block";
+      showSection('home');
+    } else {
+      document.getElementById("login-error").style.display = "block";
+    }
+  }
+
+  function logout() {
+    location.reload();
+  }
+
+  function showSection(id) {
+    document.querySelectorAll(".content").forEach(e => e.style.display = "none");
+    document.getElementById(id).style.display = "block";
+  }
+</script>
 
 </body>
 </html>
